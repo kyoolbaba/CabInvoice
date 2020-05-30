@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.taxInvioce.InvoiceServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-05-30T04:11:26" hostname="KYOOLBABA" time="0.004">
+<testsuite name="com.taxInvioce.InvoiceServiceTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-05-30T15:19:35" hostname="KYOOLBABA" time="0.008">
   <properties/>
-  <testcase name="givenMultipleRides_shouldReturnInvoiceSummary" classname="com.taxInvioce.InvoiceServiceTest" time="0.004"/>
+  <testcase name="givenMultipleRides_shouldReturnInvoiceSummary" classname="com.taxInvioce.InvoiceServiceTest" time="0.006"/>
+  <testcase name="givenLessDistanceAndTime_shouldReturnMinimunFare" classname="com.taxInvioce.InvoiceServiceTest" time="0.0"/>
+  <testcase name="givenDistanceAndTime_shouldReturnTotalFare" classname="com.taxInvioce.InvoiceServiceTest" time="0.0"/>
+  <testcase name="givenUserIdAndRide_shouldReturnInvoiceSummary" classname="com.taxInvioce.InvoiceServiceTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
