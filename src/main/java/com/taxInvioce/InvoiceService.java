@@ -2,23 +2,16 @@ package com.taxInvioce;
 
 public class InvoiceService {
 
-    private static final double MINIMUM_COST_PER_KILOMETER =10;
-    private static final int COST_PER_TIME =1;
-    private static final int MINIMUN_FARE =5;
-    private static final double PREMIUM_MINIMUM_COST_PER_KILOMETER =10;
-    private static final int PREMIUM_COST_PER_TIME =1;
-    private static final int PREMIUM_MINIMUN_FARE =5;
     private final RideRepository rideRepository;
+    ISubscription subscription;
 
-    public double addRides(double distance, int time) {
-    double totalFare= distance*MINIMUM_COST_PER_KILOMETER+time*COST_PER_TIME;
-    if(totalFare<MINIMUN_FARE)
-        return MINIMUN_FARE;
-    return totalFare;
+    public InvoiceService(RideType type) {
+        this.rideRepository=new RideRepository();
+        subscription=SubscriptionFactory.createObject(type);
     }
 
-    public InvoiceService() {
-        this.rideRepository=new RideRepository();
+    public double addRides(double distance, int time) {
+    return subscription.addRides(distance, time);
     }
 
     public InvoiceSummary calculateFare(Ride[] rides) {
@@ -29,7 +22,7 @@ public class InvoiceService {
         return new InvoiceSummary(rides.length,totalFare);
     }
 
-    public void addRides(String userId, Ride[] rides) {
+    public void addRides(String userId, Ride[] rides) throws InvoiceException {
         rideRepository.addRides(userId, rides);
     }
 
