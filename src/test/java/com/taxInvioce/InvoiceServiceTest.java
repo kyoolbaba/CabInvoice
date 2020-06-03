@@ -21,7 +21,7 @@ public class InvoiceServiceTest {
     ISubscription subscription;
 
     @InjectMocks
-    InvoiceService invoiceService;
+    InvoiceService invoiceService=new InvoiceService();
 
     @Before
     public void setUp() throws Exception {
@@ -30,29 +30,27 @@ public class InvoiceServiceTest {
 
     @Test
     public void givenDistanceAndTimeForNormalRide_shouldReturnTotalFare() {
-        invoiceService = new InvoiceService(RideType.NORMAL_RIDE);
         double distance =2.0;
         int time=5;
-        when(subscription.addRides(2.0,5)).thenReturn(25.0);
-        double fare= invoiceService.addRides(distance,time);
+        double fare= invoiceService.addRides(distance,time,RideType.NORMAL_RIDE);
         Assert.assertEquals(25,fare,0.0);
     }
 
     @Test
     public void givenLessDistanceAndTimeForNormalRide_shouldReturnMinimunFare() {
-        InvoiceService invoiceService = new InvoiceService(RideType.NORMAL_RIDE);
-        double fare= invoiceService.addRides(.1,1);
+        double distance =.1;
+        int time=1;
+        double fare= invoiceService.addRides(distance,time,RideType.NORMAL_RIDE);
         Assert.assertEquals(5,fare,0.0);
     }
 
     @Test
     public void givenMultipleRidesForNormalRide_shouldReturnInvoiceSummary() {
-        InvoiceService invoiceService = new InvoiceService(RideType.NORMAL_RIDE);
-        Ride[] rides = {new Ride(2.0, 5),
-                        new Ride(0.1,1)};
+        Ride[] rides = {new Ride(2.0, 5,RideType.NORMAL_RIDE),
+                        new Ride(0.1,1,RideType.PREMIUM_RIDE)};
         when(rideRepository.getRides(ArgumentMatchers.any())).thenReturn(rides);
         InvoiceSummary summary= invoiceService.calculateFare(rides);
-        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30.0);
+        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 45);
         Assert.assertEquals(expectedInvoiceSummary,summary);
     }
 
@@ -60,10 +58,9 @@ public class InvoiceServiceTest {
     public void givenUserIdAndRideForNormalRide_shouldReturnInvoiceSummary() {
        try{
             String userId="milan";
-            InvoiceService invoiceService = new InvoiceService(RideType.NORMAL_RIDE);
-            Ride[] rides = {new Ride(2.0, 5),
-                new Ride(0.1,1)};
-            invoiceService.addRides(userId,rides);
+            Ride[] rides = {new Ride(2.0, 5,RideType.NORMAL_RIDE),
+                new Ride(0.1,1,RideType.NORMAL_RIDE)};
+           invoiceService.addRides(userId,rides);
             InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
             InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30.0);
             Assert.assertEquals(expectedInvoiceSummary,summary);
@@ -75,27 +72,25 @@ public class InvoiceServiceTest {
 
     @Test
     public void givenDistanceAndTimeForPremiumRide_shouldReturnTotalFare() {
-        InvoiceService invoiceService = new InvoiceService(RideType.PREMIUM_RIDE);
         double distance =2.0;
         int time=5;
-        double fare= invoiceService.addRides(distance,time);
+        double fare= invoiceService.addRides(distance,time,RideType.PREMIUM_RIDE);
         Assert.assertEquals(40,fare,0.0);
     }
 
     @Test
     public void givenLessDistanceAndTimeForPremiumRide_shouldReturnMinimunFare() {
-        InvoiceService invoiceService = new InvoiceService(RideType.PREMIUM_RIDE);
         double distance=.1;
         int time=1;
-        double fare= invoiceService.addRides(distance,time);
-        Assert.assertEquals(20,fare,0.0);
+        double fare= invoiceService.addRides(distance,time,RideType.NORMAL_RIDE);
+        Assert.assertEquals(5,fare,0.0);
     }
 
     @Test
     public void givenMultipleRidesForPremiumRide_shouldReturnInvoiceSummary() {
-        InvoiceService invoiceService = new InvoiceService(RideType.PREMIUM_RIDE);
-        Ride[] rides = {new Ride(2.0, 5),
-                new Ride(0.1,1)};
+        Ride[] rides = {new Ride(2.0, 5,RideType.PREMIUM_RIDE),
+                new Ride(0.1,1,RideType.PREMIUM_RIDE)};
+        when(subscription.addRides(any(Double.class),any(Integer.class))).thenReturn(60.0);
         InvoiceSummary summary= invoiceService.calculateFare(rides);
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 60.0);
         Assert.assertEquals(expectedInvoiceSummary,summary);
@@ -105,12 +100,11 @@ public class InvoiceServiceTest {
     public void givenUserIdAndRideForPremiumRide_shouldReturnInvoiceSummary() {
         try{
             String userId="milan";
-            InvoiceService invoiceService = new InvoiceService(RideType.PREMIUM_RIDE);
-            Ride[] rides = {new Ride(2.0, 5),
-                    new Ride(0.1,1)};
+            Ride[] rides = {new Ride(2.0, 5,RideType.NORMAL_RIDE),
+                    new Ride(3,10,RideType.PREMIUM_RIDE)};
             invoiceService.addRides(userId,rides);
             InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
-            InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 60.0);
+            InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 90.0);
             Assert.assertEquals(expectedInvoiceSummary,summary);
         }catch(InvoiceException e){
             e.printStackTrace();

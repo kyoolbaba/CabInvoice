@@ -5,19 +5,19 @@ public class InvoiceService {
     private final RideRepository rideRepository;
     ISubscription subscription;
 
-    public InvoiceService(RideType type) {
+    public InvoiceService() {
         this.rideRepository=new RideRepository();
-        subscription=SubscriptionFactory.createObject(type);
     }
 
-    public double addRides(double distance, int time) {
-    return subscription.addRides(distance, time);
+    public double addRides(double distance, int time,RideType type) {
+        subscription=SubscriptionFactory.createObject(type);
+        return subscription.addRides(distance, time);
     }
 
     public InvoiceSummary calculateFare(Ride[] rides) {
         double totalFare=0;
         for(Ride ride: rides){
-            totalFare+=this.addRides(ride.distance, ride.time);
+            totalFare+=this.addRides(ride.distance, ride.time,ride.type);
     }
         return new InvoiceSummary(rides.length,totalFare);
     }

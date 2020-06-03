@@ -14,7 +14,6 @@ public class RideRepository {
     }
 
     public void addRides(String userId, Ride[] rides) throws InvoiceException {
-
         if(userId==null||rides==null) {
             throw new InvoiceException("Null Value Entered"
                     ,InvoiceException.ExceptionType.NULL_VALUE_ENTERED);
