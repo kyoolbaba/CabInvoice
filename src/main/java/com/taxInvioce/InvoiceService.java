@@ -3,15 +3,18 @@ package com.taxInvioce;
 public class InvoiceService {
 
     private final RideRepository rideRepository;
-    ISubscription subscription;
 
-    public InvoiceService() {
+    public InvoiceService(  ) {
         this.rideRepository=new RideRepository();
     }
 
+
+
     public double addRides(double distance, int time,RideType type) {
-        subscription=SubscriptionFactory.createObject(type);
-        return subscription.addRides(distance, time);
+        double totalFare=(type.minimumCostPerKm()*distance)+(type.costPerTime()*time);
+        if(totalFare<type.minimunFare())
+            return type.minimunFare();
+        return totalFare;
     }
 
     public InvoiceSummary calculateFare(Ride[] rides) {

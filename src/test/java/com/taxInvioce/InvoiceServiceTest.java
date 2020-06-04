@@ -17,9 +17,6 @@ public class InvoiceServiceTest {
     @Mock
     RideRepository rideRepository;
 
-    @Mock
-    ISubscription subscription;
-
     @InjectMocks
     InvoiceService invoiceService=new InvoiceService();
 
@@ -90,7 +87,7 @@ public class InvoiceServiceTest {
     public void givenMultipleRidesForPremiumRide_shouldReturnInvoiceSummary() {
         Ride[] rides = {new Ride(2.0, 5,RideType.PREMIUM_RIDE),
                 new Ride(0.1,1,RideType.PREMIUM_RIDE)};
-        when(subscription.addRides(any(Double.class),any(Integer.class))).thenReturn(60.0);
+        //when(subscription.addRides(any(Double.class),any(Integer.class))).thenReturn(60.0);
         InvoiceSummary summary= invoiceService.calculateFare(rides);
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 60.0);
         Assert.assertEquals(expectedInvoiceSummary,summary);

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.taxInvioce.RideRepositoryTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-06-03T13:02:48" hostname="KYOOLBABA" time="0.045">
+<testsuite name="com.taxInvioce.RideRepositoryTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-06-04T18:33:12" hostname="KYOOLBABA" time="0.034">
   <properties/>
-  <testcase name="givenUser_whenFound_shouldReturnRideList" classname="com.taxInvioce.RideRepositoryTest" time="0.005"/>
-  <testcase name="givenUserNameAsNull_whenAdded_shouldThrowException" classname="com.taxInvioce.RideRepositoryTest" time="0.017"/>
-  <testcase name="givenUserWith_whenMultipleRidesAdded_shouldReturnCount" classname="com.taxInvioce.RideRepositoryTest" time="0.001"/>
-  <testcase name="givenUserRidesAsNull_whenAdded_shouldThrowException" classname="com.taxInvioce.RideRepositoryTest" time="0.021"/>
+  <testcase name="givenUser_whenFound_shouldReturnRideList" classname="com.taxInvioce.RideRepositoryTest" time="0.004"/>
+  <testcase name="givenUserNameAsNull_whenAdded_shouldThrowException" classname="com.taxInvioce.RideRepositoryTest" time="0.018"/>
+  <testcase name="givenUserWith_whenMultipleRidesAdded_shouldReturnCount" classname="com.taxInvioce.RideRepositoryTest" time="0.0"/>
+  <testcase name="givenUserRidesAsNull_whenAdded_shouldThrowException" classname="com.taxInvioce.RideRepositoryTest" time="0.01"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[com.taxInvioce.InvoiceException: Null Value Entered
 	at com.taxInvioce.RideRepository.addRides(RideRepository.java:18)
